@@ -1,15 +1,17 @@
 'use strict';
 var fs = require('fs');
 
-exports.logger = function (req, res, next) {
+exports.logActivity = function (req, res, next) {
+    var dt = new Date();
+    var timestamp = dt.toISOString();
     var components = [
-        d,
+        timestamp,
         res.filename,
         res.numPages,
         res.numPagesChecked
     ];
     var logLine = components.join(' ');
-    var log = generateLogPathFile();
+    var log = generateLogPathFile(dt);
     var pathFile = log[path] + '/' + log[file];
     fs.mkdirSync(log[path], {recursive: true}, (err) => {
         if (err) throw err;
@@ -20,9 +22,7 @@ exports.logger = function (req, res, next) {
     next();
 }
 
-function generateLogPathFile() {
-    var dt = new Date().toISOString();
-
+function generateLogPathFile(dt) {
     var year = dt.getFullYear().toString();
     var rawMonth = dt.getMonth() + 1;
     var month = rawMonth.toString().padStart(2, '0');
