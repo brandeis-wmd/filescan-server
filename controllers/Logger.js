@@ -1,5 +1,24 @@
 'use strict';
-fs = require('fs');
+var fs = require('fs');
+
+exports.logger = function (req, res, next) {
+    var components = [
+        d,
+        res.filename,
+        res.numPages,
+        res.numPagesChecked
+    ];
+    var logLine = components.join(' ');
+    var log = generateLogPathFile();
+    var pathFile = log[path] + '/' + log[file];
+    fs.mkdirSync(log[path], {recursive: true}, (err) => {
+        if (err) throw err;
+    });
+    fs.appendFile(pathFile, logLine, (err) => {
+        if(err) throw err;
+    });
+    next();
+}
 
 function generateLogPathFile() {
     var dt = new Date().toISOString();
@@ -26,21 +45,3 @@ function generateLogPathFile() {
     return {path: logPath, file: fileName};
 }
 
-function logger(req, res, next) {
-    var components = [
-        d,
-        res.filename,
-        res.numPages,
-        res.numPagesChecked
-    ];
-    var logLine = components.join(' ');
-    var log = generateLogPathFile();
-    var pathFile = log[path] + '/' + log[file];
-    fs.mkdirSync(log[path], { recursive: true }, (err) => {
-        if (err) throw err;
-    });
-    fs.appendFile(pathFile, logLine, (err) => {
-        if(err) throw err;
-    });
-    next();
-}
