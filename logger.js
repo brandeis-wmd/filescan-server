@@ -1,28 +1,25 @@
 'use strict';
 var fs = require('fs');
 
-exports.logActivity = function (req, res, next) {
+exports.logActivity = function (results, src) {
     var dt = new Date();
-    var timestamp = dt.toISOString();
+    var timestamp = dt.toString();
     var components = [
         timestamp,
-        req.url,
-        res.filename,
-        res.numPages,
-        res.numPagesChecked
+        '"' + results.title + '"',
+        src,
+        results.numPages,
+        results.numPagesChecked
     ];
     var logLine = components.join(' ');
     logLine += '\n';
     var log = generateLogPathFile(dt);
     var pathFile = log['path'] + '/' + log['file'];
     validatePath(log['path']);
-    // fs.mkdirSync(log['path'], { recursive: true }, (err) => {
-    //    if (err) throw err;
-    //});
     fs.appendFile(pathFile, logLine, (err) => {
         if(err) throw err;
     });
-    next();
+    console.log(logLine);
 }
 
 function generateLogPathFile(dt) {

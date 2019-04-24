@@ -1,8 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  description: "File accessibilty checker.  Accepts a file and returns accessiblity\
-    \ information about the file."
+  description: "File accessibilty checker. Accepts a file and returns accessiblity information about the file."
   version: "0.0.1"
   title: "Accessibility Checker"
   contact:
@@ -153,3 +152,4 @@ definitions:
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
+

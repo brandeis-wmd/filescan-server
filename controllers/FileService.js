@@ -6,6 +6,7 @@ const util = require('util');
 const fileType = require('file-type');
 const pdfjsLib = require('pdfjs-dist');
 global.DOMParser = require('../domparsermock.js').DOMParserMock;
+const logger = require('../logger');
 
 exports.scanUrl = function(args, res, next) {
 	const fileUrl = args.url.value;
@@ -18,6 +19,7 @@ exports.scanUrl = function(args, res, next) {
 			results.filename = fileName;
 			results.id = scanId;
 			sendAPIResponse(res, results);
+            logger.logActivity(results, 'url');
 		}, (err) => {throw err}).catch((err) => sendAPIResponse(res, "", err));
 }
 
@@ -37,6 +39,7 @@ exports.scanFile = function(args, res, next) {
  			results.filename = fileName;
  			results.id = scanId;
  			sendAPIResponse(res, results);
+            logger.logActivity(results, 'file');
  		}, (err) => {throw err}).catch((err) => sendAPIResponse(res, "", err));
 }
 
