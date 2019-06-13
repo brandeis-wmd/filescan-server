@@ -1,0 +1,11 @@
+the certChain.* files
+should contain all certs
+down to (but not including)
+self-signed root
+
+the TLS cert for the host
+is at the start of the file
+and the signers follow in order
+
+more:
+https://nodejs.org/api/tls.html#tls_tls_createsecurecontext_options
